@@ -1,0 +1,478 @@
+@use '../../../styles/abstract/variables' as *;
+
+.page {
+  padding: $space-5;
+  max-width: 1100px;
+  margin: 0 auto;
+  background-color: $color-bg;
+  min-height: 100vh;
+  font-family: $font-body;
+
+  .page-header {
+    margin-bottom: $space-5;
+    text-align: center;
+
+    .page-title {
+      font-family: $font-body;
+      font-size: 2rem;
+      font-weight: 800;
+      color: $color-on-surface;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $space-2;
+    }
+
+    .beta-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      border-radius: $radius-full;
+      margin: 0;
+    }
+
+    .page-subtitle {
+      font-family: $font-body;
+      color: $color-muted;
+      font-size: 1rem;
+      margin-top: $space-2;
+    }
+
+    .header-actions {
+      margin-top: $space-3;
+      display: flex;
+      justify-content: center;
+      gap: $space-2;
+    }
+  }
+}
+
+// ── "PC only" note for voice mode ──
+.pc-only-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: $font-body;
+  color: $color-on-secondary-container;
+  background-color: $color-secondary-container;
+  padding: 4px 10px;
+  border-radius: $radius-full;
+}
+
+// ── Topic selection grid (notebook-style white cards) ──
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: $space-4;
+
+  .topic-card {
+    background-color: $color-surface-container-lowest; // pure white surface
+    border-radius: $radius-xl;
+    padding: $space-5;
+    cursor: pointer;
+    box-shadow: 0px 8px 24px rgba(155, 69, 0, 0.04);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease, background-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+
+    &:hover {
+      transform: translateY(-4px);
+      background-color: #ffffff;
+      box-shadow: 0px 12px 32px rgba(155, 69, 0, 0.08);
+    }
+
+    .topic-card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: $space-2;
+    }
+
+    .topic-title {
+      font-family: $font-body;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $color-on-surface;
+      margin: 0;
+    }
+
+    .topic-desc {
+      font-family: $font-body;
+      font-size: 0.9rem;
+      color: $color-muted;
+      margin: 0;
+      flex: 1;
+      min-height: 1.2em;
+    }
+
+    .topic-card-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: $space-2;
+      flex-wrap: wrap;
+      margin-top: $space-1;
+    }
+
+    .topic-count {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: $color-primary;
+    }
+  }
+}
+
+// ── Practice workspace ──
+.workspace {
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: $space-3;
+  }
+
+  .progress-text {
+    font-size: 0.9rem;
+    color: $color-muted;
+    font-family: $font-body;
+  }
+}
+
+// ── Exercise card (white, notebook-style) ──
+.exercise-card {
+  background-color: $color-surface-container-lowest; // white
+  border-radius: $radius-xl;
+  padding: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-4;
+  box-shadow: 0px 8px 24px rgba(155, 69, 0, 0.04);
+  font-family: $font-body;
+
+  .exercise-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: $space-3;
+  }
+
+  .exercise-actions {
+    flex-shrink: 0;
+  }
+
+  .vi-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $color-primary;
+    font-family: $font-body;
+  }
+
+  .vi-text {
+    font-family: $font-body;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.45;
+    color: $color-on-surface;
+    margin: $space-1 0 0;
+  }
+
+  // Nested "answer area" — soft tinted surface to separate from the white card without borders
+  .answer-area {
+    background-color: $color-surface-container-low;
+    border-radius: $radius-lg;
+    padding: $space-4;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+  }
+
+  .mode-switch {
+    display: flex;
+    gap: $space-2;
+  }
+}
+
+// ── Voice mode ──
+.voice-box {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  align-items: center;
+  padding: $space-4 0;
+
+  .mic-button {
+    width: 84px;
+    height: 84px;
+    border-radius: $radius-full;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #fff;
+    background: $color-secondary;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+
+    &:hover { transform: scale(1.05); }
+
+    &.listening {
+      background: $color-error;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+  }
+
+  .voice-hint {
+    font-size: 0.85rem;
+    color: $color-muted;
+    text-align: center;
+    font-family: $font-body;
+  }
+
+  .interim {
+    font-style: italic;
+    color: $color-on-surface-variant;
+    font-size: 0.95rem;
+    min-height: 1.2em;
+    text-align: center;
+    font-family: $font-body;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 0 16px rgba(239, 68, 68, 0); }
+}
+
+// ── Feedback panel ──
+.feedback {
+  border-radius: $radius-lg;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  background-color: $color-surface-container-low;
+  font-family: $font-body;
+
+  .feedback-header {
+    display: flex;
+    align-items: center;
+    gap: $space-2;
+    font-weight: 700;
+    font-family: $font-body;
+    font-size: 1.05rem;
+  }
+
+  &.correct .feedback-header { color: $color-success; }
+  &.incorrect .feedback-header { color: $color-error; }
+
+  .feedback-block {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+
+    .block-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: $color-muted;
+    }
+
+    .block-text {
+      font-family: $font-body;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: $color-on-surface;
+      margin: 0;
+    }
+
+    .better-version {
+      font-weight: 600;
+      color: $color-primary;
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: $space-6 $space-4;
+  color: $color-muted;
+  font-family: $font-body;
+}
+
+// ── Typewriter caret ──
+.caret {
+  display: inline-block;
+  width: 7px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background-color: $color-primary;
+  animation: caret-blink 0.9s step-end infinite;
+}
+
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+// ── Keyboard shortcut hint ──
+.shortcut-hint {
+  font-size: 0.8rem;
+  color: $color-muted;
+  font-family: $font-body;
+  text-align: center;
+  margin-top: -$space-2;
+}
+
+// ── Sentence list drawer ──
+.sentence-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+
+  .sentence-item {
+    padding: $space-3;
+    border-radius: $radius-md;
+    background-color: $color-surface-container-low;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.15s ease;
+    font-family: $font-body;
+
+    &:hover {
+      background-color: $color-surface-container-high;
+      transform: translateX(-2px);
+    }
+
+    &.sentence-item-active {
+      background-color: $color-secondary-container;
+    }
+
+    .sentence-item-top {
+      display: flex;
+      align-items: center;
+      gap: $space-2;
+      margin-bottom: $space-1;
+
+      .sentence-index {
+        font-weight: 700;
+        font-size: 0.8rem;
+        color: $color-primary;
+      }
+
+      .sentence-done-badge {
+        margin-left: auto;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: $radius-full;
+
+        &[data-correct='true'] {
+          color: $color-success;
+          background-color: color-mix(in srgb, $color-success 14%, transparent);
+        }
+        &[data-correct='false'] {
+          color: $color-warning;
+          background-color: color-mix(in srgb, $color-warning 16%, transparent);
+        }
+      }
+    }
+
+    .sentence-text {
+      margin: 0;
+      font-family: $font-body;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: $color-on-surface;
+    }
+  }
+}
+
+// ── Attempt history modal ──
+.history-prompt {
+  font-family: $font-body;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: $color-on-surface;
+  margin: 0 0 $space-4;
+  padding: $space-3;
+  background-color: $color-surface-container-low;
+  border-radius: $radius-md;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+
+  .history-item {
+    border-radius: $radius-lg;
+    padding: $space-4;
+    background-color: $color-surface-container-low;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    font-family: $font-body;
+
+    &.history-correct { box-shadow: inset 3px 0 0 $color-success; }
+    &.history-incorrect { box-shadow: inset 3px 0 0 $color-error; }
+
+    .history-item-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: $space-2;
+    }
+
+    .history-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .history-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: $color-muted;
+    }
+
+    .history-answer {
+      margin: 0;
+      font-family: $font-body;
+      font-size: 0.95rem;
+      color: $color-on-surface;
+    }
+
+    .history-feedback {
+      font-family: $font-body;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: $color-on-surface;
+    }
+
+    .history-better {
+      margin: 0;
+      font-weight: 600;
+      color: $color-primary;
+      font-size: 0.92rem;
+    }
+  }
+}

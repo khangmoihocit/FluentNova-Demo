@@ -1,0 +1,3 @@
+ALTER TABLE dictionary_words
+ALTER COLUMN word TYPE TEXT,
+ALTER COLUMN pronunciation TYPE TEXT;

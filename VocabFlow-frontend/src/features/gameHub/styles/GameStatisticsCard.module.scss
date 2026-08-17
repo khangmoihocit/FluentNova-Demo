@@ -1,0 +1,94 @@
+@use '../../../styles/abstract/variables' as *;
+
+.stats-container {
+    background-color: $color-surface;
+    border-radius: $radius-xl;
+    padding: $space-5;
+    box-shadow: $shadow-ambient;
+
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+    height: 100%;
+
+    .stats-header {
+        h2 {
+            font-family: $font-headline;
+            color: $color-on-surface;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        p {
+            font-family: $font-body;
+            color: $color-muted;
+            font-size: 0.875rem;
+            margin-top: $space-1;
+            margin-bottom: 0;
+        }
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: $space-4;
+        flex: 1;
+
+        @media (max-width: 1200px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: 576px) {
+            grid-template-columns: 1fr;
+            gap: $space-3;
+        }
+
+        .stat-card {
+            background-color: $color-surface-container-lowest;
+            border-radius: $radius-lg;
+            padding: $space-4;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid $color-outline-variant;
+
+            @media (max-width: 576px) {
+                padding: $space-3;
+            }
+
+            .stat-label {
+                font-family: $font-body;
+                color: $color-muted;
+                font-size: 0.8125rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+
+            .stat-value {
+                font-family: $font-headline;
+                color: $color-on-surface;
+                font-size: 2rem;
+                font-weight: 800;
+                margin-top: $space-2;
+                line-height: 1;
+
+                @media (max-width: 576px) {
+                    font-size: 1.75rem;
+                }
+
+                .stat-suffix {
+                    font-size: 0.875rem;
+                    color: $color-muted;
+                    font-weight: 500;
+                    margin-left: 2px;
+                }
+            }
+
+            &.gold-tier .stat-value { color: $color-warning; }
+            &.silver-tier .stat-value { color: #A0AEC0; }
+            &.bronze-tier .stat-value { color: #D69E2E; }
+        }
+    }
+}

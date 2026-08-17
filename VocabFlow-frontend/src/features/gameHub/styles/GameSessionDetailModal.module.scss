@@ -1,0 +1,150 @@
+@use '../../../styles/abstract/variables' as *;
+
+.detail-modal {
+    :global(.ant-modal-content) {
+        background-color: $color-surface;
+        border-radius: $radius-xl;
+        padding: $space-5;
+    }
+
+    :global(.ant-modal-header) {
+        background-color: transparent;
+        margin-bottom: $space-4;
+    }
+
+    :global(.ant-modal-title) {
+        font-family: $font-headline;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: $color-on-surface;
+    }
+
+    .loading-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+    }
+
+    .detail-content {
+        display: flex;
+        flex-direction: column;
+
+        .header-stats {
+            display: flex;
+            justify-content: space-around;
+            background-color: $color-surface-container-lowest;
+            border-radius: $radius-lg;
+            padding: $space-4;
+            border: 1px solid $color-outline-variant;
+
+            .stat-box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: $space-1;
+
+                .stat-label {
+                    font-family: $font-body;
+                    font-size: 0.875rem;
+                    color: $color-muted;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                }
+
+                .stat-value {
+                    font-family: $font-headline;
+                    font-size: 1.5rem;
+                    font-weight: 800;
+                    color: $color-on-surface;
+                }
+            }
+        }
+
+        .segment-list {
+            display: flex;
+            flex-direction: column;
+            gap: $space-3;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: $space-2;
+
+            /* Custom Scrollbar */
+            &::-webkit-scrollbar {
+                width: 6px;
+            }
+            &::-webkit-scrollbar-track {
+                background: $color-surface-container-lowest;
+                border-radius: $radius-full;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: $color-outline-variant;
+                border-radius: $radius-full;
+            }
+            &::-webkit-scrollbar-thumb:hover {
+                background: $color-outline;
+            }
+
+            .segment-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background-color: $color-surface-container-lowest;
+                border-radius: $radius-lg;
+                padding: $space-3 $space-4;
+                border: 1px solid $color-outline-variant;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: $shadow-ambient;
+                    border-color: $color-outline;
+                }
+
+                .segment-main {
+                    display: flex;
+                    flex-direction: column;
+                    gap: $space-2;
+                    flex: 1;
+
+                    .segment-header {
+                        display: flex;
+                        align-items: center;
+                        gap: $space-3;
+
+                        .segment-index {
+                            font-family: $font-body;
+                            font-size: 0.875rem;
+                            font-weight: 700;
+                            color: $color-muted;
+                        }
+
+                        .segment-score {
+                            font-family: $font-headline;
+                            font-size: 1.125rem;
+                            font-weight: 800;
+                        }
+                    }
+
+                    .segment-text {
+                        font-family: $font-body;
+                        font-size: 1rem;
+                        color: $color-on-surface;
+                        margin: 0;
+                        line-height: 1.5;
+                    }
+
+                    .segment-penalties {
+                        display: flex;
+                        gap: $space-2;
+                        flex-wrap: wrap;
+                    }
+                }
+
+                .segment-action {
+                    margin-left: $space-4;
+                }
+            }
+        }
+    }
+}

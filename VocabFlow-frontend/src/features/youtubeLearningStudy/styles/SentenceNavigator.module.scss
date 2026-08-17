@@ -1,0 +1,97 @@
+@use '../../../styles/abstract/variables' as *;
+
+// Container — bg shift instead of border
+.navigator-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: $color-surface-container;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
+}
+
+.nav-btn {
+  flex-shrink: 0;
+}
+
+.chip-scroll {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  flex: 1;
+  padding: 2px 0;
+
+  &::-webkit-scrollbar {
+    height: 0;
+  }
+}
+
+// Chip — No-Line Rule: tonal bg instead of border
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 14px;
+  border-radius: $radius-full;
+  border: none;
+  background: $color-surface;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: $color-muted;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  outline: none;
+  min-width: 32px;
+
+  &:hover {
+    background: $color-surface-container-high;
+    color: $color-on-surface;
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background: $color-on-surface;
+    color: $color-surface;
+    font-weight: 600;
+    box-shadow: $shadow-ambient;
+  }
+
+  &.completed {
+    background: $color-on-surface-variant;
+    color: $color-surface;
+    font-weight: 600;
+  }
+
+  &.active.completed {
+    background: $color-on-surface;
+  }
+}
+
+// ─── Toggle Vertical Nav Button ─────────────────────────────
+.toggle-vertical-btn {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-sm;
+  border: none;
+  background: $color-surface;
+  color: $color-muted;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-left: 4px;
+
+  &:hover {
+    background: $color-surface-container-high;
+    color: $color-on-surface;
+  }
+
+  &.toggle-active {
+    background: $color-on-surface;
+    color: $color-surface;
+  }
+}

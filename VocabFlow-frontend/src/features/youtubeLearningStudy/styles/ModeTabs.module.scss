@@ -1,0 +1,117 @@
+@use '../../../styles/abstract/variables' as *;
+
+.mode-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  padding: 4px 0; // Add some vertical padding for the badge
+  
+  &::-webkit-scrollbar {
+    height: 0;
+  }
+
+  @media (max-width: 767px) {
+    gap: 12px; // More space on mobile
+  }
+}
+
+// Tab pill — No-Line Rule: bg tiers instead of borders
+.tab-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
+  border-radius: $radius-full;
+  border: none;
+  background: $color-surface-container;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: $font-headline;
+  color: $color-muted;
+  // Specify properties to avoid jumpy 'all' transition
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  white-space: nowrap;
+  outline: none;
+  overflow: visible; 
+  position: relative;
+  flex-shrink: 0; // Prevent tabs from being squashed
+
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    
+    &:hover {
+      background: $color-surface-container;
+      color: $color-muted;
+      transform: none;
+    }
+  }
+
+  .dev-badge {
+    position: absolute;
+    top: -10px;
+    right: -6px;
+    font-size: 8px;
+    background: var(--color-surface-container-highest, #e0e0e0);
+    color: var(--color-on-surface-variant, #555);
+    padding: 2px 5px;
+    border-radius: 4px;
+    line-height: 1;
+    white-space: nowrap;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  &:hover {
+    background: $color-surface-container-high;
+    color: $color-on-surface;
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-container 100%);
+    color: $color-on-primary;
+    font-weight: 700;
+    box-shadow: $shadow-ambient;
+    // Keep padding consistent or minimal change to avoid 'pop'
+    padding: 7px 16px;
+  }
+
+  .tab-icon {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .tab-label {
+    display: inline-block;
+    max-width: 150px;
+    opacity: 1;
+    margin-left: 8px;
+    overflow: hidden;
+    // Ease-in-out for more natural "expansion" feel
+    transition: max-width 0.4s ease-in-out,
+      opacity 0.3s ease,
+      margin-left 0.4s ease-in-out;
+  }
+
+  &.mobile {
+    // Fixed padding on mobile to prevent horizontal jumping of the entire bar
+    padding: 7px 12px;
+
+    &:not(.active) {
+      .tab-label {
+        max-width: 0;
+        opacity: 0;
+        margin-left: 0;
+      }
+    }
+
+    &.active {
+      padding: 7px 14px; // Minimal difference
+    }
+  }
+}

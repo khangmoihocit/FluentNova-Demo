@@ -1,0 +1,303 @@
+@use '../../../styles/abstract/variables' as *;
+
+// ─── Backdrop — Glassmorphism ─────────────────────────────────
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(32, 27, 16, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+// ─── Card ─────────────────────────────────────────────────────
+.modal-card {
+  position: relative;
+  width: 90%;
+  max-width: 420px;
+  background: $color-surface-container-lowest;
+  border-radius: $radius-xl;
+  padding: 40px 32px 32px;
+  box-shadow: 0px 24px 48px rgba(155, 69, 0, 0.12);
+  text-align: center;
+  overflow: hidden;
+  animation: cardEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  transform: scale(0.8) translateY(40px);
+  opacity: 0;
+}
+
+@keyframes cardEntrance {
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+// ─── Particles ────────────────────────────────────────────────
+.particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9b4500, #ff8c42);
+  opacity: 0;
+  animation: particleBurst 1.5s ease-out var(--delay, 0s) forwards;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes particleBurst {
+  0% {
+    transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(0);
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(var(--angle, 0deg)) translateY(calc(var(--distance, 60px) * -1));
+    opacity: 0;
+  }
+}
+
+// ─── Celebration Icon ─────────────────────────────────────────
+.celebration-icon {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 16px;
+  animation: iconFloat 2s ease-in-out infinite alternate;
+}
+
+.nova-mascot {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 24px rgba(30, 42, 68, 0.12));
+}
+
+@keyframes iconFloat {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-6px); }
+}
+
+// ─── Title & Subtitle ────────────────────────────────────────
+.modal-title {
+  font-family: $font-headline;
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #9b4500, #ff8c42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 8px;
+  animation: fadeUp 0.5s ease 0.3s both;
+}
+
+.modal-subtitle {
+  font-family: $font-body;
+  font-size: 14px;
+  color: $color-muted;
+  line-height: 1.6;
+  margin: 0 0 24px;
+  animation: fadeUp 0.5s ease 0.4s both;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─── Stats Row ────────────────────────────────────────────────
+.stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 28px;
+  animation: fadeUp 0.5s ease 0.5s both;
+}
+
+// ── Score Ring ──
+.score-ring {
+  position: relative;
+  width: 100px;
+  height: 100px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+}
+
+.ring-bg {
+  fill: none;
+  stroke: $color-surface-container-high;
+  stroke-width: 7;
+}
+
+.ring-fill {
+  fill: none;
+  stroke: url(#celebGrad);
+  stroke-width: 7;
+  stroke-linecap: round;
+  // Override fallback color since SVG gradients might not work via CSS
+  stroke: #ff8c42;
+}
+
+.score-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+}
+
+.score-num {
+  font-family: $font-headline;
+  font-size: 28px;
+  font-weight: 800;
+  color: $color-on-surface;
+}
+
+.score-unit {
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-muted;
+}
+
+.score-label {
+  font-size: 11px;
+  color: $color-muted;
+  margin-top: 6px;
+  text-align: center;
+}
+
+// ── Stat block ──
+.stat-block {
+  text-align: center;
+}
+
+.stat-value {
+  font-family: $font-headline;
+  font-size: 32px;
+  font-weight: 800;
+  color: $color-on-surface;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: $color-muted;
+  margin-top: 4px;
+}
+
+// ─── Actions ──────────────────────────────────────────────────
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeUp 0.5s ease 0.6s both;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px 24px;
+  border: none;
+  border-radius: $radius-full;
+  background: linear-gradient(135deg, #9b4500, #ff8c42);
+  color: #fff;
+  font-family: $font-headline;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0px 8px 24px rgba(155, 69, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 12px 32px rgba(155, 69, 0, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 10px 24px;
+  border: none;
+  border-radius: $radius-full;
+  background: transparent;
+  color: $color-primary;
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: $color-surface-container-low;
+  }
+}
+
+// ── Mobile ──
+@media (max-width: 767px) {
+  .modal-card {
+    padding: 32px 20px 24px;
+    max-width: 340px;
+  }
+
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .celebration-icon {
+    width: 120px;
+    height: 120px;
+  }
+
+  .stats-row {
+    gap: 24px;
+  }
+
+  .score-ring {
+    width: 80px;
+    height: 80px;
+  }
+
+  .score-num {
+    font-size: 22px;
+  }
+
+  .stat-value {
+    font-size: 26px;
+  }
+}

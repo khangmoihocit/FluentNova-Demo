@@ -1,0 +1,174 @@
+@use '../../../styles/abstract/variables' as *;
+
+.calendar-card {
+  background: $color-surface-container-low;
+  border-radius: $radius-xl;
+  padding: 24px;
+  box-shadow: $shadow-ambient;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .calendar-title {
+    font-family: $font-headline;
+    font-size: 18px;
+    font-weight: 700;
+    color: $color-on-surface;
+    margin: 0;
+  }
+
+  .streak-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba($color-warning, 0.15);
+    color: $color-warning;
+    padding: 6px 12px;
+    border-radius: $radius-full;
+    font-weight: 700;
+    font-size: 14px;
+  }
+}
+
+.unauth-overlay {
+  text-align: center;
+  padding: 32px 16px;
+  color: $color-muted;
+  font-size: 14px;
+  background: $color-surface-container;
+  border-radius: $radius-lg;
+}
+
+.calendar-wrapper {
+  // Override Ant Design Calendar to match Solar Pulse
+  :global {
+    .ant-picker-calendar {
+      background: transparent;
+    }
+    .ant-picker-calendar-full {
+      .ant-picker-panel {
+        background: transparent;
+      }
+    }
+    .ant-picker-calendar-mode-switch {
+      display: none; // Hide Month/Year switch
+    }
+    .ant-picker-calendar-header {
+      padding: 0 0 12px 0;
+      border-bottom: 1px solid $color-border-light;
+      margin-bottom: 12px;
+    }
+    .ant-picker-cell-in-view {
+      color: $color-on-surface;
+    }
+    .ant-picker-content th {
+      color: $color-muted;
+      font-weight: 600;
+    }
+  }
+}
+
+.custom-header {
+  text-align: center;
+  font-family: $font-headline;
+  font-weight: 600;
+  color: $color-on-surface;
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.custom-cell {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border-radius: $radius-full;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: default;
+
+  .cell-text {
+    z-index: 2;
+  }
+
+  .fire-icon {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    color: $color-warning;
+    font-size: 12px;
+    z-index: 3;
+    filter: drop-shadow(0 2px 4px rgba($color-warning, 0.4));
+  }
+
+  &.today {
+    border: 2px solid $color-primary;
+    color: $color-primary;
+    font-weight: 700;
+  }
+
+  &.active {
+    background: rgba($color-warning, 0.1);
+    color: $color-warning;
+    font-weight: 700;
+  }
+}
+
+// ─── Mobile ──────────────────────────────────────────────────
+@media (max-width: 640px) {
+  .calendar-card {
+    padding: 16px;
+    margin-top: 16px;
+    gap: 12px;
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    .calendar-title {
+      font-size: 16px;
+    }
+
+    .streak-badge {
+      font-size: 12px;
+      padding: 4px 10px;
+    }
+  }
+
+  .calendar-wrapper {
+    :global {
+      .ant-picker-calendar-header {
+        padding-bottom: 8px;
+        margin-bottom: 8px;
+      }
+      .ant-picker-content th {
+        font-size: 12px;
+        padding: 4px 0;
+      }
+    }
+  }
+
+  .custom-cell {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+
+    .fire-icon {
+      font-size: 10px;
+      top: -2px;
+      right: -2px;
+    }
+  }
+}

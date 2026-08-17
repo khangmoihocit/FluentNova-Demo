@@ -1,0 +1,231 @@
+.favoritePage {
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+
+  @media (max-width: 767px) {
+    padding: 16px;
+  }
+}
+
+.pageHeader {
+  margin-bottom: 32px;
+
+  .titleRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Manrope', sans-serif;
+    font-size: 1.375rem;
+    font-weight: 800;
+    color: var(--color-text-primary, #111);
+    margin-bottom: 0;
+    width: auto;
+    white-space: nowrap;
+
+    @media (max-width: 767px) {
+      font-size: 1.125rem;
+    }
+  }
+
+  p {
+    color: var(--color-text-secondary, #666);
+    font-size: 1rem;
+
+    @media (max-width: 767px) {
+      font-size: 0.875rem;
+    }
+  }
+
+  .syncGuideNote {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background-color: var(--color-surface-container-low, #f5f5f5);
+    border: 1px solid rgba(155, 69, 0, 0.08);
+    font-size: 0.8125rem;
+    color: var(--color-text-secondary, #666);
+    width: fit-content;
+
+    .noteIcon {
+      display: flex;
+      align-items: center;
+      font-size: 0.875rem;
+    }
+    
+    .guideLink {
+      color: var(--color-primary, #9b4500);
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s;
+      
+      &:hover {
+        color: var(--color-primary-dark, #7a3600);
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    margin-bottom: 20px;
+  }
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+.emptyState {
+  margin-top: 64px;
+}
+
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+.videoCard {
+  background: var(--color-surface-container-lowest, #ffffff);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 767px) {
+    border-radius: 12px;
+  }
+}
+
+.thumbnailContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  cursor: pointer;
+  overflow: hidden;
+
+  .thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.duration {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.favoriteBtnWrapper {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cardContent {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+  @media (max-width: 767px) {
+    padding: 10px;
+  }
+}
+
+.title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  color: var(--color-text-primary, #111);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  cursor: pointer;
+
+  @media (max-width: 767px) {
+    font-size: 0.875rem;
+    margin-bottom: 8px;
+  }
+
+  &:hover {
+    color: var(--color-primary, #9b4500);
+  }
+}
+
+.cardActions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  margin-top: auto;
+
+  @media (max-width: 767px) {
+    padding-top: 10px;
+  }
+}
+
+.ankiSyncBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--color-primary, #9b4500);
+  border-radius: 8px;
+  font-weight: 600;
+  height: 36px;
+  border: none;
+  width: 100%;
+  
+  @media (max-width: 767px) {
+    font-size: 0.75rem;
+    height: 32px;
+    border-radius: 6px;
+  }
+
+  &:hover {
+    background-color: var(--color-primary-dark, #7a3600) !important;
+  }
+}

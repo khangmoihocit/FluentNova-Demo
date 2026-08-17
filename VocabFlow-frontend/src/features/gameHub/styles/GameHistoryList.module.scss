@@ -1,0 +1,173 @@
+@use '../../../styles/abstract/variables' as *;
+
+.history-container {
+    background-color: $color-surface;
+    border-radius: $radius-xl;
+    padding: $space-5;
+    box-shadow: $shadow-ambient;
+
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+
+    h2 {
+        font-family: $font-headline;
+        color: $color-on-surface;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .history-list {
+        display: flex;
+        flex-direction: column;
+        gap: $space-3;
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: $color-surface-container-lowest;
+            border-radius: $radius-lg;
+            padding: $space-3 $space-4;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid $color-outline-variant;
+            gap: $space-3;
+
+            @media (max-width: 480px) {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: $space-4;
+            }
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: $shadow-ambient;
+                border-color: $color-outline;
+            }
+
+            .item-info {
+                display: flex;
+                flex-direction: column;
+                gap: $space-1;
+
+                .game-type-badge {
+                    font-family: $font-body;
+                    font-size: 0.75rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    padding: 4px 10px;
+                    border-radius: $radius-full;
+                    display: inline-block;
+                    width: fit-content;
+
+                    &.dictation {
+                        background-color: $color-primary-container;
+                        color: $color-on-primary-container;
+                    }
+
+                    &.shadowing {
+                        background-color: $color-tertiary-container;
+                        color: $color-on-tertiary-container;
+                    }
+                }
+
+                .item-date {
+                    font-family: $font-body;
+                    color: $color-muted;
+                    font-size: 0.8125rem;
+                }
+            }
+
+            .item-score-section {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: $space-1;
+
+                @media (max-width: 480px) {
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                    border-top: 1px solid $color-outline-variant;
+                    padding-top: $space-3;
+                    margin-top: $space-1;
+                }
+
+                .score-badge {
+                    font-family: $font-headline;
+                    font-size: 1.125rem;
+                    font-weight: 800;
+                    padding: 4px 14px;
+                    border-radius: $radius-full;
+
+                    &.gold {
+                        background-color: rgba(255, 215, 0, 0.1);
+                        color: $color-warning;
+                    }
+                    &.silver {
+                        background-color: rgba(160, 174, 192, 0.1);
+                        color: #A0AEC0;
+                    }
+                    &.bronze {
+                        background-color: rgba(214, 158, 46, 0.1);
+                        color: #D69E2E;
+                    }
+                    &.base {
+                        background-color: $color-surface-variant;
+                        color: $color-on-surface-variant;
+                    }
+                }
+
+                .question-count {
+                    font-family: $font-body;
+                    color: $color-muted;
+                    font-size: 0.75rem;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+
+    .load-more-btn {
+        margin-top: $space-2;
+        padding: $space-2 $space-4;
+        background-color: transparent;
+        border: 1px solid $color-outline;
+        color: $color-primary;
+        font-family: $font-headline;
+        font-weight: 600;
+        border-radius: $radius-full;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        align-self: center;
+
+        &:hover {
+            background-color: $color-surface-variant;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    }
+
+    .empty-state {
+        padding: $space-5 0;
+        text-align: center;
+        color: $color-muted;
+        font-family: $font-body;
+    }
+}
+
+// ─── Responsive Adjustments ──────────────────────────────────
+@media (max-width: 600px) {
+    .history-container {
+        padding: $space-4;
+
+        h2 {
+            font-size: 1.125rem;
+        }
+    }
+}

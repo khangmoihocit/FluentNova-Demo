@@ -1,0 +1,59 @@
+@use '../../../styles/abstract/variables' as *;
+
+// ─── Study Timer ─────────────────────────────────────────────
+.study-timer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: $radius-full;
+  background: $color-surface-container-low;
+  transition: all 0.3s ease;
+  user-select: none;
+  flex-shrink: 0;
+
+  &.pulse {
+    animation: timerPulse 1s ease-in-out;
+  }
+}
+
+.timer-icon {
+  width: 14px;
+  height: 14px;
+  color: $color-primary;
+  flex-shrink: 0;
+}
+
+.timer-text {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: $color-on-surface;
+  min-width: 36px;
+  text-align: center;
+}
+
+@keyframes timerPulse {
+  0% { transform: scale(1); box-shadow: none; }
+  50% { transform: scale(1.08); box-shadow: 0 0 12px rgba(155, 69, 0, 0.15); }
+  100% { transform: scale(1); box-shadow: none; }
+}
+
+// ── Mobile ──
+@media (max-width: 767px) {
+  .study-timer {
+    padding: 2px 6px;
+    gap: 3px;
+  }
+
+  .timer-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .timer-text {
+    font-size: 11px;
+    min-width: 30px;
+  }
+}

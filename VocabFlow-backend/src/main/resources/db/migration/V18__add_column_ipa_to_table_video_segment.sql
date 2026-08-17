@@ -1,0 +1,1 @@
+alter table video_segments add column ipa text;

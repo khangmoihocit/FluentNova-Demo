@@ -1,0 +1,1 @@
+ALTER TABLE vocabulary_units ALTER COLUMN id TYPE BIGINT;

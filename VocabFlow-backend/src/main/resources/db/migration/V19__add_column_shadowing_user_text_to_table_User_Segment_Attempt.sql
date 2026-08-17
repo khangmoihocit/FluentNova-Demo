@@ -1,0 +1,1 @@
+alter table user_segment_attempts add column shadowing_user_text text;

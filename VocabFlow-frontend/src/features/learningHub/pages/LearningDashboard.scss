@@ -1,0 +1,53 @@
+/* === LearningDashboard.scss === */
+/* Solar Pulse Design System — Dashboard Layout */
+
+.learning-dashboard {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+
+    /* --- Greeting --- */
+    &__greeting {
+        margin-bottom: 2rem;
+    }
+
+    &__heading {
+        font-family: 'Manrope', sans-serif;
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: var(--color-on-surface, #201b10);
+        margin: 0 0 0.5rem;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+    }
+
+    &__desc {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        color: var(--color-on-surface-variant, #4f4539);
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    /* --- Content Stack --- */
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+
+/* --- Responsive --- */
+@media (max-width: 640px) {
+    .learning-dashboard {
+        padding: 1rem 0.75rem 3rem;
+
+        &__heading {
+            font-size: 1.75rem;
+        }
+
+        &__desc {
+            font-size: 0.875rem;
+        }
+    }
+}

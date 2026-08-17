@@ -1,0 +1,72 @@
+#spring.application.name=VocabFlow
+server:
+  port: ${PORT:8085}
+#jdbc:postgresql://localhost:5432/vocabflow_db
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+  api:
+    prefix: /api/v1
+
+  jwt:
+    signerKey: ${JWT_KEY}
+    valid-duration: ${JWT_VALID_DURATION} # 7200 #in second (2 hour)
+    refreshable-duration: ${JWT_REFRESHABLE_DURATION} #432000 #in second 432 000 (5day)
+    issuer: ${JWT_ISSUER}
+
+  ai:
+    google:
+      genai:
+        api-key: ${GEMINI_API_KEY_1}
+        chat:
+          options:
+            model: gemini-2.5-flash-lite
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+  app:
+    google:
+      client-id:
+        web: ${CLIENT_ID}
+        extension: ${EXTENSION_CLIENT_ID}
+  brevo:
+    api:
+      key: ${BREVO_API_KEY}
+
+gemini:
+  model: gemini-2.5-flash-lite
+  key-cooldown-seconds: 60  # Thời gian (giây) chờ trước khi thử lại key bị lỗi
+  api-keys:
+    - ${GEMINI_API_KEY_1}
+    - ${GEMINI_API_KEY_2}
+    - ${GEMINI_API_KEY_3}
+    - ${GEMINI_API_KEY_4}
+    - ${GEMINI_API_KEY_5}
+    - ${GEMINI_API_KEY_6}
+
+cloudinary:
+  cloud-name: ${CLOUD_NAME}
+  api-key: ${CLOUD_API_KEY}
+  api-secret: ${CLOUD_API_SECRET}
+

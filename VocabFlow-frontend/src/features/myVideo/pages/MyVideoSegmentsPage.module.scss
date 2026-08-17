@@ -1,0 +1,675 @@
+/* ============================================================
+   MY VIDEO SEGMENTS PAGE — Dual-Mode Segment Editor
+   ============================================================ */
+
+.segmentsPage {
+  background-color: #ffffff;
+  padding: 24px 30px;
+  min-height: 100vh;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ════════════════════════════════════════
+   HEADER
+   ════════════════════════════════════════ */
+.pageHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.backBtn {
+  font-weight: 500;
+  height: 32px !important;
+  padding: 0 12px !important;
+  font-size: 13px !important;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px !important;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pageTitle {
+  margin: 0 !important;
+  font-size: 20px !important;
+  background: linear-gradient(135deg, #4f46e5, #6366f1) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.headerMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.videoTitleText {
+  max-width: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569 !important;
+}
+
+.toolbar {
+  flex-shrink: 0;
+
+  /* Make toolbar buttons compact so they don't overflow on smaller screens */
+  :global(.ant-btn) {
+    height: 32px;
+    padding-inline: 10px;
+    font-size: 12.5px;
+    border-radius: 8px;
+  }
+
+  :global(.ant-btn .anticon) {
+    font-size: 13px;
+  }
+}
+
+.headerDivider {
+  margin: 16px 0 !important;
+}
+
+/* ── Save button ── */
+.saveBtn {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  border: none !important;
+  font-weight: 600;
+  border-radius: 10px !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+  height: 42px;
+  padding: 0 28px;
+
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4) !important;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.copySuccessBtn {
+  color: #10b981 !important;
+  border-color: #10b981 !important;
+  transition: all 0.3s;
+}
+
+/* ════════════════════════════════════════
+   LOADING STATE
+   ════════════════════════════════════════ */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
+}
+
+/* ════════════════════════════════════════
+   EDITOR CARD + TABS
+   ════════════════════════════════════════ */
+.editorCard {
+  border-radius: 14px !important;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.02);
+}
+
+.workspaceTabs {
+  margin-bottom: 16px;
+
+  :global {
+    .ant-tabs-nav {
+      margin-bottom: 0;
+    }
+
+    .ant-tabs-tab {
+      font-weight: 600;
+    }
+  }
+}
+
+.editorTabs {
+  :global {
+    .ant-tabs-nav {
+      padding: 0 20px;
+      margin-bottom: 0;
+      background: linear-gradient(180deg, #fafbfd, #f5f7fa);
+      border-bottom: 1px solid #e8ecf1;
+    }
+
+    .ant-tabs-tab {
+      padding: 14px 6px;
+      font-weight: 500;
+      font-size: 14px;
+      color: #64748b;
+      transition: all 0.25s;
+
+      &:hover {
+        color: #6366f1;
+      }
+    }
+
+    .ant-tabs-tab-active .ant-tabs-tab-btn {
+      color: #6366f1 !important;
+      font-weight: 600;
+    }
+
+    .ant-tabs-ink-bar {
+      background: linear-gradient(90deg, #6366f1, #8b5cf6) !important;
+      height: 3px !important;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .ant-tabs-extra-content {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.tabLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.addSegmentBtn {
+  border-color: #6366f1 !important;
+  color: #6366f1 !important;
+  font-weight: 500;
+  border-radius: 8px !important;
+
+  &:hover {
+    background: rgba(99, 102, 241, 0.06) !important;
+  }
+}
+
+.jsonCountTag {
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ════════════════════════════════════════
+   VISUAL EDITOR — List Mode
+   ════════════════════════════════════════ */
+.visualEditor {
+  position: relative;
+}
+
+.emptySegments {
+  padding: 80px 0 !important;
+}
+
+/* ── Sticky column headers ── */
+.columnHeaders {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  background: #f8f9fc;
+  border-bottom: 1px solid #e8ecf1;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.colHeaderLeft {
+  display: flex;
+  gap: 12px;
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.colHeaderRight {
+  flex: 1;
+  min-width: 0;
+}
+
+.colHeaderActions {
+  width: 40px;
+  flex-shrink: 0;
+}
+
+.colHeader {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #94a3b8;
+}
+
+/* ── Scrollable segment list ── */
+.segmentList {
+  max-height: calc(100vh - 310px);
+  min-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ── Per-chunk inline translate control bar (every 25 segments) ── */
+.chunkTranslateBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 8px;
+  padding: 8px 12px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  border-radius: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+/* ── Single segment row ── */
+.segmentRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid #f0f2f5;
+  transition: background 0.2s;
+
+  &:hover {
+    background: #fafbfe;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.segmentLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.segmentIndex {
+  padding-top: 2px;
+}
+
+.timestampGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.timestampField {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.timestampLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  width: 34px;
+}
+
+.timestampInput {
+  width: 110px !important;
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  font-family: 'Consolas', 'Monaco', monospace !important;
+
+  :global {
+    .ant-input-number-handler-wrap {
+      opacity: 1;
+      border-radius: 0 6px 6px 0;
+    }
+  }
+}
+
+.timestampPreview {
+  font-size: 11px;
+  color: #94a3b8;
+  font-family: 'Consolas', monospace;
+  white-space: nowrap;
+}
+
+/* ── Text fields ── */
+.segmentRight {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.textFieldRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fieldIcon {
+  color: #94a3b8;
+  font-size: 14px;
+  flex-shrink: 0;
+  width: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textInput {
+  border-radius: 6px !important;
+  font-size: 13px !important;
+  transition: all 0.2s;
+
+  &:focus,
+  &:hover {
+    border-color: #6366f1 !important;
+  }
+}
+
+.ipaInput {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+  color: #7c3aed;
+}
+
+/* ── Delete button ── */
+.segmentActions {
+  width: 40px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2px;
+}
+
+.mergeRowBtn {
+  color: #6366f1;
+  opacity: 0.45;
+  transition: opacity 0.2s, transform 0.2s;
+
+  &:hover:not(:disabled) {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    opacity: 0.15;
+  }
+}
+
+.deleteRowBtn {
+  opacity: 0.4;
+  transition: opacity 0.2s, color 0.2s;
+
+  &:hover:not(:disabled) {
+    opacity: 1;
+  }
+
+  &:disabled {
+    opacity: 0.15;
+  }
+}
+
+/* ════════════════════════════════════════
+   JSON EDITOR — Code Mode
+   ════════════════════════════════════════ */
+.jsonEditor {
+  padding: 16px 20px 20px;
+}
+
+.jsonErrorBanner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #450a0a, #7f1d1d);
+  border: 1px solid #991b1b;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #7f1d1d, #991b1b);
+  }
+}
+
+.jsonEditorWrapper {
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #313244;
+  background: #1e1e2e;
+  position: relative;
+
+  &:focus-within {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.15);
+  }
+}
+
+.jsonLineNumbers {
+  width: 52px;
+  min-width: 52px;
+  background: #181825;
+  padding: 16px 0;
+  overflow: hidden;
+  user-select: none;
+  border-right: 1px solid #313244;
+  flex-shrink: 0;
+}
+
+.jsonLineNum {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 22.1px;
+  text-align: right;
+  padding-right: 12px;
+  color: #585b70;
+  transition: all 0.15s ease;
+}
+
+.jsonLineNumError {
+  color: #ef4444 !important;
+  font-weight: 700;
+  background: rgba(239, 68, 68, 0.15);
+  position: relative;
+
+  &::after {
+    content: '▶';
+    position: absolute;
+    left: 4px;
+    font-size: 8px;
+    color: #ef4444;
+  }
+}
+
+.jsonTextArea {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace !important;
+  font-size: 13px !important;
+  line-height: 22.1px !important;
+  border-radius: 0 !important;
+  background: #1e1e2e !important;
+  color: #cdd6f4 !important;
+  padding: 16px !important;
+  border: none !important;
+  box-shadow: none !important;
+  resize: vertical;
+  flex: 1;
+
+  &::placeholder {
+    color: #6c7086 !important;
+  }
+
+  &:focus {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #45475a;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #1e1e2e;
+  }
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+}
+
+.jsonTextAreaError {
+  background: #1e1e2e !important;
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE
+   ════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .segmentRow {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .segmentLeft {
+    width: 100%;
+  }
+
+  .segmentRight {
+    width: 100%;
+  }
+
+  .columnHeaders {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .pageHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar {
+    justify-content: flex-end;
+  }
+
+  .videoTitleText {
+    max-width: 200px;
+  }
+}
+
+/* ════════════════════════════════════════
+   CHUNK PROGRESS PANEL
+   ════════════════════════════════════════ */
+.chunkPanel {
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.chunkPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chunkGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 6px;
+}
+
+.chunkItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #e8ecf1;
+  background: #ffffff;
+  transition: all 0.2s ease;
+  min-height: 36px;
+}
+
+.chunkItemLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.chunkItemRight {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.chunkItem_done {
+  border-color: #d1fae5;
+  background: #f0fdf4;
+}
+
+.chunkItem_error {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.chunkItem_loading {
+  border-color: #c7d2fe;
+  background: #eef2ff;
+}
+
+.chunkItem_pending {
+  border-color: #e8ecf1;
+  background: #f8fafc;
+  opacity: 0.65;
+}

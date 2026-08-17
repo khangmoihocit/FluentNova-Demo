@@ -1,0 +1,585 @@
+@use '../../../styles/abstract/variables' as *;
+
+// ─── Container — full height, no scroll ─────────────────────
+.dictation-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+// ─── Header — bg shift, no border ───────────────────────────
+.dictation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: $color-surface-container;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .title {
+      font-size: 15px;
+      font-weight: 600;
+      font-family: $font-headline;
+      color: $color-on-surface;
+    }
+
+    .counter {
+      font-size: 12px;
+      color: $color-muted;
+      background: $color-surface-container-high;
+      padding: 2px 10px;
+      border-radius: $radius-full;
+      font-weight: 500;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+// ─── Body — flex-grow center zone ───────────────────────────
+.dictation-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10px 16px 10px;
+  gap: 12px;
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ─── Hint Box ───────────────────────────────────────────────
+.hint-box {
+  padding: 0px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-end;
+  justify-content: center;
+
+  .word-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // gap: 4px;
+
+    .reveal-btn {
+      font-size: 14px;
+      color: $color-muted;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 2px;
+
+      &:hover {
+        color: $color-primary;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .word-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: $radius-full;
+    font-family: $font-body;
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 40px;
+    transition: all 0.25s ease;
+    border: none;
+  }
+
+  .word-pill-correct {
+    background-color: rgba(46, 125, 50, 0.15);
+    /* roughly emerald-100 */
+    color: #1b5e20;
+    /* emerald-800 */
+    border-bottom: 2px solid rgba(46, 125, 50, 0.4);
+    /* emerald-300 */
+  }
+
+  .word-pill-incorrect {
+    background-color: $color-error-container;
+    color: $color-on-error-container;
+    border-bottom: 2px solid $color-error;
+  }
+
+  .word-pill-pending {
+    background-color: rgba(255, 255, 255, 0.5);
+    /* white/50 */
+    color: $color-muted;
+    /* stone-400 equivalent */
+    border: 2px dashed $color-outline-variant;
+    /* stone-200 equivalent */
+
+    :global([data-theme="dark"]) & {
+      background-color: rgba(0, 0, 0, 0.25);
+      color: $color-muted;
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+.subtitle-ipa{
+    font-family: $font-body;
+    font-size: 14px;
+    color: $color-primary;
+    font-style: italic;
+    text-align: center;
+}
+
+  .subtitle-trans {
+    font-family: $font-body;
+    font-size: 15px;
+    color: $color-on-surface;
+    // opacity: 0.85;
+    text-align: center;
+  }
+
+// ─── Input Area — borderless, tonal surface, Solar radius ───
+.input-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.input-area {
+  margin-top: 16px;
+  width: 100%;
+  max-width: 780px;
+
+  .dictation-input {
+    font-size: 18px;
+    font-family: $font-body;
+    padding: 16px 20px;
+    border-radius: $radius-lg !important;
+    border: none !important;
+    background-color: $color-surface-container-lowest;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease, text-align 0.3s ease;
+    color: $color-on-surface;
+    resize: none;
+    line-height: 1.6;
+    text-align: center;
+
+    &.text-left {
+      text-align: left;
+    }
+
+    &::placeholder {
+      color: $color-disabled;
+      font-weight: 400;
+    }
+
+    &:hover {
+      background-color: $color-surface;
+    }
+
+    &:focus {
+      background-color: $color-surface;
+      box-shadow: $shadow-ambient !important;
+      outline: none;
+    }
+  }
+
+  // Mobile: ensure full width
+  @media (max-width: 576px) {
+    max-width: 100%;
+  }
+}
+
+// ─── Check Result — borderless card with shadow lift ────────
+.check-result {
+  padding: 12px 16px;
+  background: $color-surface-container-lowest;
+  border-radius: $radius-md;
+  border: none;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.7;
+  color: $color-on-surface;
+  box-shadow: $shadow-ambient;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  .result-success {
+    color: $color-success;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+  }
+
+  .result-words {
+    display: inline;
+  }
+
+  .word-correct {
+    color: $color-success;
+    font-weight: 700;
+    padding: 1px 4px;
+    border-radius: $radius-sm;
+    background: rgba(46, 125, 50, 0.08);
+  }
+
+  .word-incorrect {
+    color: $color-error;
+    font-weight: 700;
+    text-decoration: line-through;
+    padding: 1px 5px;
+    border-radius: $radius-sm;
+    background: rgba(186, 26, 26, 0.06);
+  }
+
+  .word-missing {
+    color: $color-warning;
+    font-weight: 700;
+    padding: 1px 4px;
+  }
+
+  .word-expected {
+    color: $color-success;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: $radius-sm;
+    background: rgba(46, 125, 50, 0.06);
+  }
+
+  // Success message styles
+  .success-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 0;
+  }
+
+  .success-translation {
+    display: block;
+    font-size: 14px;
+    color: $color-muted;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .success-original {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: $color-on-surface;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  .success-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $color-success;
+    font-weight: 700;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+
+  .micro-mascot {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(30, 42, 68, 0.10));
+    flex-shrink: 0;
+    animation: mascotPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  @keyframes mascotPopIn {
+    0% { transform: scale(0) rotate(-15deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+
+  .error-result-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+@keyframes scorePopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// ─── Score Area ──────────────────────────────────────────────
+.score-area {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+  margin-bottom: 8px;
+  width: 100%;
+
+  .score-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: $font-headline;
+    font-size: 15px;
+    font-weight: 700;
+    color: $color-success;
+    background: rgba(46, 125, 50, 0.08);
+    padding: 6px 20px;
+    border-radius: $radius-full;
+    // margin-bottom: 8px;
+    animation: scorePopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+}
+
+// ─── Scoring rules inline reminder ──────────────────────────
+.scoring-rules-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: $color-muted;
+  // border-top: 1px dashed $color-outline-variant;
+  margin-top: auto;
+
+  .scoring-rule {
+    white-space: nowrap;
+
+    strong {
+      color: $color-error;
+      font-weight: 700;
+    }
+  }
+
+  .scoring-rule-divider {
+    color: $color-outline-variant;
+    font-size: 8px;
+  }
+}
+
+// ─── Action Bar — bg shift, no border ───────────────────────
+.action-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: $color-surface-container;
+  transition: background-color 0.3s ease;
+}
+
+.nav-btn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 24px;
+}
+
+.play-btn {
+  min-width: 80px;
+  height: 24px;
+  border-radius: $radius-full;
+  background: $color-surface-container-low;
+  border: none;
+  color: $color-on-surface;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 14px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-surface-container-highest;
+    color: $color-on-surface;
+    transform: translateY(-1px);
+  }
+}
+
+.action-divider {
+  width: 1px;
+  height: 20px;
+  background: $color-outline-variant;
+  opacity: 0.4;
+  margin: 0 4px;
+}
+
+.submit-btn {
+  height: 32px;
+  border-radius: $radius-sm;
+  background: $color-surface-container-low;
+  border: none;
+  color: $color-on-surface;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-surface-container-highest;
+    color: $color-on-surface;
+    transform: translateY(-1px);
+  }
+}
+
+// ─── Shortcut Popup ─────────────────────────────────────────
+.shortcut-list {
+  padding: 8px 0;
+
+  .shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 13px;
+    color: $color-on-surface;
+    gap: 16px;
+
+    // No-Line Rule: use spacing, not dividers
+    &+.shortcut-item {
+      padding-top: 8px;
+    }
+
+    .shortcut-keys {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ─── MOBILE RESPONSIVE ────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+
+@media (max-width: 767px) {
+  .dictation-header {
+    padding: 6px 10px;
+    flex-wrap: wrap;
+    gap: 6px;
+
+    .header-left {
+      gap: 6px;
+
+      .counter {
+        font-size: 11px;
+        padding: 2px 8px;
+      }
+    }
+
+    .header-actions {
+      gap: 4px;
+    }
+  }
+
+  .action-bar {
+    gap: 4px;
+  }
+
+  .nav-btn {
+    width: 28px;
+    height: 22px;
+  }
+
+  .play-btn {
+    min-width: 60px;
+    height: 22px;
+    font-size: 11px;
+    padding: 0 8px;
+  }
+
+  .dictation-body {
+    padding: 12px 10px 8px;
+    gap: 8px;
+  }
+
+  .input-area {
+    margin: 8px 0;
+
+    .dictation-input {
+      font-size: 15px;
+      padding: 12px 14px;
+    }
+  }
+
+  .hint-box {
+    padding: 6px 8px;
+    gap: 6px;
+
+    .word-pill {
+      padding: 4px 10px;
+      font-size: 12px;
+      min-width: 32px;
+    }
+  }
+
+  .check-result {
+    padding: 10px 12px;
+    font-size: 13px;
+
+    .success-original {
+      font-size: 14px;
+    }
+
+    .success-status {
+      font-size: 12px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .dictation-body {
+    padding: 8px 6px 6px;
+    gap: 6px;
+  }
+
+  .input-area .dictation-input {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .hint-box {
+    gap: 4px;
+
+    .word-pill {
+      padding: 3px 8px;
+      font-size: 14px;
+    }
+  }
+
+  .play-btn {
+    min-width: 50px;
+    font-size: 10px;
+  }
+}

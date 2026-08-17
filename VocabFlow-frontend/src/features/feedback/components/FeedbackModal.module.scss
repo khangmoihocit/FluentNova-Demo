@@ -1,0 +1,95 @@
+.feedbackModalRoot {
+  :global(.ant-modal-content) {
+    background: var(--color-surface-container-lowest);
+    box-shadow: var(--shadow-ambient);
+    border: none;
+    border-radius: var(--radius-lg, 20px);
+    padding: 24px;
+  }
+
+  :global(.ant-modal-header) {
+    background: transparent;
+    border: none;
+    margin-bottom: 18px;
+  }
+
+  :global(.ant-modal-close) {
+    color: var(--color-on-surface-variant);
+    border-radius: var(--radius-full, 999px);
+
+    &:hover {
+      color: var(--color-primary);
+      background: var(--color-surface-container);
+    }
+  }
+
+  :global(.ant-form-item-label > label) {
+    color: var(--color-on-surface);
+    font-family: var(--font-body);
+    font-weight: 600;
+  }
+
+  :global(.ant-form-item-extra) {
+    color: var(--color-on-surface-variant);
+    font-family: var(--font-body);
+  }
+
+  :global(.ant-input),
+  :global(.ant-input-affix-wrapper),
+  :global(.ant-select-selector) {
+    background: var(--color-surface-container-low) !important;
+    border: none !important;
+    box-shadow: none !important;
+    color: var(--color-on-surface);
+    font-family: var(--font-body);
+  }
+
+  :global(.ant-input:hover),
+  :global(.ant-input-affix-wrapper:hover),
+  :global(.ant-select-selector:hover) {
+    background: var(--color-surface-container) !important;
+  }
+
+  :global(.ant-input:focus),
+  :global(.ant-input-affix-wrapper-focused),
+  :global(.ant-select-focused .ant-select-selector) {
+    background: var(--color-surface-container-high) !important;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 16%, transparent) !important;
+  }
+}
+
+.title {
+  color: var(--color-on-surface);
+  font-family: var(--font-headline);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.form {
+  font-family: var(--font-body);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 6px;
+
+  :global(.ant-btn) {
+    border: none;
+    box-shadow: none;
+    font-family: var(--font-body);
+    font-weight: 700;
+  }
+
+  :global(.ant-btn-default) {
+    background: var(--color-surface-container-low);
+    color: var(--color-on-surface-variant);
+
+    &:hover {
+      background: var(--color-surface-container);
+      color: var(--color-primary);
+    }
+  }
+}

@@ -1,0 +1,78 @@
+// ==============================================
+// Theme: Basic (Default — clean, minimal, study-friendly)
+// ==============================================
+:root[data-theme="basic"] {
+    // ── Core surfaces ──
+    --color-bg: #F3F3F3;
+    --color-surface: #FFFFFF;
+    --color-surface-dim: #EBEBEB;
+    --color-surface-container-lowest: #FFFFFF;
+    --color-surface-container-low: #FAFAFA;
+    --color-surface-container: #F5F5F5;
+    --color-surface-container-high: #EFEFEF;
+    --color-surface-container-highest: #E8E8E8;
+    --color-surface-variant: #E4E4E4;
+    --color-surface-bright: #FFFFFF;
+
+    // ── Text ──
+    --color-text: #07070A;
+    --color-on-surface: #07070A;
+    --color-on-surface-variant: #5F5F66;
+    --color-muted: #5F5F66;
+    --color-disabled: #A2A2A8;
+
+    // ── Primary (Black accent) ──
+    --color-primary: #07070A;
+    --color-primary-container: #2F2F35;
+    --color-on-primary: #FFFFFF;
+    --color-on-primary-container: #E4E4E4;
+
+    // ── Fixed / Extended palette ──
+    --color-primary-fixed: #EFEFEF;
+    --color-primary-fixed-dim: #E4E4E4;
+
+    // ── Secondary (Neutral) ──
+    --color-secondary: #5F5F66;
+    --color-secondary-container: #D9D9DD;
+    --color-on-secondary: #FFFFFF;
+    --color-on-secondary-container: #2F2F35;
+
+    // ── Tertiary ──
+    --color-tertiary: #5F5F66;
+    --color-tertiary-container: #D9D9DD;
+    --color-on-tertiary: #FFFFFF;
+    --color-on-tertiary-container: #2F2F35;
+
+    // ── Borders ──
+    --color-border-light: #E4E4E4;
+    --color-border-strong: #CFCFCF;
+    --color-outline: #CFCFCF;
+    --color-outline-variant: #E4E4E4;
+
+    // ── State colors ──
+    --color-success: #2E7D32;
+    --color-warning: #B26A00;
+    --color-error: #D32F2F;
+    --color-error-container: #FFDAD6;
+    --color-on-error-container: #93000a;
+    --color-info: #1769AA;
+
+    // ── Inverse ──
+    --color-inverse-surface: #2F2F35;
+    --color-inverse-on-surface: #F3F3F3;
+    --color-inverse-primary: #D9D9DD;
+
+    // ── Shadows ──
+    --shadow-ambient: 0px 16px 32px rgba(7, 7, 10, 0.06);
+
+    // ── Typography ──
+    --font-headline: 'Inter', system-ui, Roboto, Arial, sans-serif;
+    --font-body: 'Inter', system-ui, Roboto, Arial, sans-serif;
+
+    // ── Radius ──
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+}

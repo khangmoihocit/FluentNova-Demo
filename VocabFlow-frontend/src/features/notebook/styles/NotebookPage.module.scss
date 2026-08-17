@@ -1,0 +1,657 @@
+/* =============================================
+   NotebookPage — Solar Theme
+   ============================================= */
+@use '../../../styles/abstract/variables' as *;
+
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+  min-height: 100vh;
+  background-color: $color-bg;
+
+  @media (max-width: 1024px) {
+    padding: 32px 24px 80px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 24px 16px 80px;
+  }
+}
+
+/* ── Page Header ── */
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 16px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .titleRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  h1 {
+    font-family: $font-headline;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: $color-on-surface;
+    margin: 0;
+    line-height: 1.1;
+    width: auto;
+    white-space: nowrap;
+
+    @media (max-width: 767px) {
+      font-size: 18px;
+    }
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    color: $color-muted;
+    font-weight: 500;
+  }
+
+  .syncGuideNote {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: $radius-md;
+    background-color: $color-surface-container-low;
+    border: 1px solid rgba($color-primary, 0.08);
+    font-size: 13px;
+    color: $color-muted;
+    width: fit-content;
+
+    .noteIcon {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+    
+    .guideLink {
+      color: $color-primary;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: all 0.2s;
+      
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: $color-primary;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  width: fit-content;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: translateX(-4px);
+    opacity: 0.8;
+  }
+}
+
+.addGroupBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: $radius-full;
+  background: linear-gradient(135deg, $color-primary, $color-primary-container);
+  color: $color-on-primary;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0px 4px 12px rgba(155, 69, 0, 0.1);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: linear-gradient(135deg, $color-primary, $color-primary-container);
+    box-shadow: 0px 8px 24px rgba(155, 69, 0, 0.2);
+    filter: brightness(1.05);
+  }
+
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+/* ── Header Actions Row ── */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+
+  @media (max-width: 767px) {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* ── View Toggle ── */
+.viewToggle {
+  display: flex;
+  align-items: center;
+  background-color: $color-surface-container-low;
+  border-radius: $radius-sm;
+  overflow: hidden;
+}
+
+.viewToggleBtn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-muted;
+  font-size: 18px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    color: $color-primary;
+    background-color: $color-surface-container;
+  }
+
+  &.active {
+    color: $color-on-primary-container;
+    background-color: $color-primary-container;
+    box-shadow: 0 4px 12px rgba(155, 69, 0, 0.1);
+  }
+}
+
+/* ── Anki Sync Button ── */
+.ankiSyncBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: $radius-full;
+  background: linear-gradient(135deg, $color-secondary, $color-secondary-container);
+  color: $color-on-secondary;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    box-shadow: 0px 4px 16px rgba(0, 96, 168, 0.25);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+/* ── Loading & Empty ── */
+.loadingWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  text-align: center;
+
+  h2 {
+    font-family: $font-headline;
+    font-size: 22px;
+    font-weight: 700;
+    color: $color-on-surface;
+    margin: 16px 0 8px;
+  }
+
+  p {
+    color: $color-muted;
+    font-size: 14px;
+    margin: 0 0 24px;
+    max-width: 320px;
+  }
+}
+
+.emptyIllustration {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.emptyIcon {
+  font-size: 64px;
+  color: $color-primary;
+  position: relative;
+  z-index: 2;
+}
+
+.pulseRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background-color: rgba($color-primary, 0.1);
+  border-radius: 50%;
+  z-index: 1;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
+}
+
+.primaryActionBtn {
+  height: auto !important;
+  padding: 12px 32px !important;
+  border-radius: $radius-full !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  background: linear-gradient(135deg, $color-primary, $color-primary-container) !important;
+  border: none !important;
+  box-shadow: 0 8px 24px rgba(155, 69, 0, 0.2) !important;
+  transition: all 0.3s !important;
+
+  &:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 12px 32px rgba(155, 69, 0, 0.3) !important;
+  }
+}
+
+/* ── Group List ── */
+.groupList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  /* Grid mode */
+  &.gridView {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 992px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 576px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+/* ── Group Card ── */
+.groupCard {
+  background-color: $color-surface-container-lowest;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  box-shadow: 0px 8px 24px rgba(155, 69, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: none;
+
+  &:hover {
+    box-shadow: 0px 12px 32px rgba(155, 69, 0, 0.06);
+    background-color: #ffffff;
+  }
+
+  &.expanded {
+    box-shadow: 0px 16px 48px rgba(155, 69, 0, 0.1);
+  }
+
+  /* When in grid view, we might want to adjust the style */
+  .gridView & {
+    height: fit-content;
+  }
+}
+
+.groupHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  gap: 16px;
+
+  &:hover {
+    background-color: rgba($color-primary-container, 0.05);
+  }
+
+  /* Show actions on hover in grid view or always in list view */
+  .groupActions {
+    position: absolute;
+    top: 24px;
+    right: 16px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  &:hover .groupActions {
+    opacity: 1;
+  }
+}
+
+.groupInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+}
+
+.groupIcon {
+  font-size: 40px;
+  color: $color-primary;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 4px 12px rgba(155, 69, 0, 0.2));
+}
+
+.groupName {
+  margin: 0;
+  font-family: $font-headline;
+  font-size: 20px;
+  font-weight: 800;
+  color: $color-on-surface;
+  line-height: 1.2;
+}
+
+.groupMeta {
+  font-size: 14px;
+  color: $color-muted;
+  font-weight: 500;
+  padding: 4px 12px;
+  background-color: $color-surface-container-low;
+  border-radius: $radius-full;
+}
+
+.groupActions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── Icon Buttons ── */
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-on-surface-variant;
+  font-size: 16px;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: $color-surface-container-high;
+    color: $color-primary;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+/* ── Unit List ── */
+.unitList {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slideDown 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.unitEmpty {
+  padding: 16px;
+  text-align: center;
+  background-color: $color-surface-container-low;
+  border-radius: $radius-md;
+
+  p {
+    margin: 0;
+    color: $color-muted;
+    font-size: 13px;
+  }
+}
+
+.unitCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background-color: $color-surface-container-low;
+  border-radius: $radius-md;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+
+  &:hover {
+    background-color: $color-surface-container-high;
+  }
+}
+
+.unitInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+}
+
+.unitIcon {
+  font-size: 18px;
+  color: $color-primary-container;
+  flex-shrink: 0;
+}
+
+.unitName {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-on-surface;
+  line-height: 1.3;
+}
+
+.unitDesc {
+  font-size: 12px;
+  color: $color-muted;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unitDrillActions {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 3;
+  pointer-events: auto;
+}
+
+/* ── Drill-down Unit View ── */
+.unitView {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.5s ease;
+}
+
+.unitGridView {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 576px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.unitCardDrillDown {
+  background-color: $color-surface-container-lowest;
+  border-radius: $radius-lg;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(155, 69, 0, 0.03);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(155, 69, 0, 0.08);
+    background-color: #ffffff;
+  }
+
+  .unitGridView & {
+    flex-direction: column;
+    height: 100%;
+  }
+}
+
+.unitDrillInfo {
+  display: flex;
+  gap: 16px;
+  cursor: pointer;
+  flex: 1;
+  width: 100%;
+
+  .unitGridView & {
+    flex-direction: column;
+  }
+}
+
+.unitIconContainer {
+  width: 48px;
+  height: 48px;
+  background-color: $color-surface-container-low;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.3s;
+
+  .unitCardDrillDown:hover & {
+    background-color: $color-primary-container;
+    color: $color-on-primary-container;
+  }
+}
+
+.unitIconDrill {
+  font-size: 24px;
+}
+
+.unitText {
+  flex: 1;
+  min-width: 0;
+}
+
+.unitNameDrill {
+  margin: 0 0 4px;
+  font-family: $font-headline;
+  font-size: 18px;
+  font-weight: 700;
+  color: $color-on-surface;
+}
+
+.unitDescDrill {
+  margin: 0;
+  font-size: 14px;
+  color: $color-muted;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.unitDrillActions {
+  .unitGridView & {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 4;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,84 @@
+// ==============================================
+// Theme: Solar ("The Radiant Kinetic" — DESIGN.md)
+// Warm, editorial, premium language-learning aesthetic
+// ==============================================
+:root[data-theme="solar"] {
+    // ── Core surfaces (Atmospheric Layering) ──
+    --color-bg: #fff8f2;
+    --color-surface: #fff8f2;
+    --color-surface-dim: #e4d9c6;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #fef2df;
+    --color-surface-container: #f8ecda;
+    --color-surface-container-high: #f2e7d4;
+    --color-surface-container-highest: #ede1cf;
+    --color-surface-variant: #ede1cf;
+    --color-surface-bright: #fff8f2;
+
+    // ── Text ──
+    --color-text: #201b10;
+    --color-on-surface: #201b10;
+    --color-on-surface-variant: #564338;
+    --color-muted: #897266;
+    --color-disabled: #a29080;
+
+    // ── Primary (Warm orange) ──
+    --color-primary: #9b4500;
+    --color-primary-container: #ff8c42;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #6a2d00;
+
+    // ── Secondary (Blue — AI/tech) ──
+    --color-secondary: #0060a8;
+    --color-secondary-container: #47a1ff;
+    --color-on-secondary: #ffffff;
+    --color-on-secondary-container: #003663;
+
+    // ── Tertiary (Teal — complementary) ──
+    --color-tertiary: #00677f;
+    --color-tertiary-container: #00b9e2;
+    --color-on-tertiary: #ffffff;
+    --color-on-tertiary-container: #004556;
+
+    // ── Borders (Ghost-border philosophy) ──
+    --color-border-light: rgba(221, 193, 179, 0.15);
+    --color-border-strong: #ddc1b3;
+    --color-outline: #897266;
+    --color-outline-variant: #ddc1b3;
+
+    // ── State colors ──
+    --color-success: #2E7D32;
+    --color-warning: #B26A00;
+    --color-error: #ba1a1a;
+    --color-error-container: #FFDAD6;
+    --color-on-error-container: #93000a;
+    --color-info: #0060a8;
+
+    // ── Fixed / Extended palette ──
+    --color-primary-fixed: #ffdbc9;
+    --color-primary-fixed-dim: #ffb68d;
+    --color-secondary-fixed: #d3e4ff;
+    --color-secondary-fixed-dim: #a2c9ff;
+    --color-tertiary-fixed: #b7eaff;
+    --color-tertiary-fixed-dim: #4cd6ff;
+    --color-error-container: #ffdad6;
+
+    // ── Inverse ──
+    --color-inverse-surface: #363023;
+    --color-inverse-on-surface: #fbefdc;
+    --color-inverse-primary: #ffb68d;
+
+    // ── Shadows (Solar Shadow — warm tinted) ──
+    --shadow-ambient: 0px 24px 48px rgba(155, 69, 0, 0.08);
+
+    // ── Typography (Dual-typeface system) ──
+    --font-headline: 'Manrope', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, Roboto, Arial, sans-serif;
+
+    // ── Radius (Generous, inviting) ──
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 32px;
+    --radius-xl: 48px;
+    --radius-full: 9999px;
+}

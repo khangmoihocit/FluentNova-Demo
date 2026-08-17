@@ -1,0 +1,863 @@
+@use '../../../styles/abstract/variables' as *;
+
+// ─── Root container — full viewport height, no scroll ───────
+.learning-container {
+  height: 100%;
+  max-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: $color-bg;
+  padding: 8px 10px 5px;
+  box-sizing: border-box;
+}
+
+// ─── Top bar (back | mode tabs | actions) ────────────────────
+.top-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  gap: 12px;
+
+  .back-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: $color-muted;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    padding: 2px 0;
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    &:hover {
+      color: $color-on-surface;
+    }
+  }
+
+  .top-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .timer-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .fullscreen-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-muted;
+    font-size: 18px;
+    padding: 4px;
+    height: auto;
+    border: none;
+    background: transparent;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    &:hover {
+      color: $color-primary;
+      transform: scale(1.1);
+    }
+  }
+
+  .top-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    align-items: center;
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: $color-muted;
+      font-family: $font-body;
+      font-weight: 600;
+      border-radius: $radius-md;
+      padding: 4px 8px;
+
+      &:hover {
+        color: $color-on-surface;
+        background: $color-surface-container;
+      }
+
+      &.active {
+        color: $color-primary;
+        background: $color-surface-container;
+      }
+    }
+  }
+}
+
+// ─── Main layout row ─────────────────────────────────────────
+.learning-layout {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  gap: 0;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+// ─── Left panel (video on top + dictation/shadowing content below) ──
+.left-panel {
+  flex: 0 0 60%;
+  max-width: 60%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: $radius-lg;
+
+  &.hidden {
+    flex: 0 0 0 !important;
+    max-width: 0 !important;
+    min-width: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    opacity: 0;
+    pointer-events: none;
+
+    .video-info {
+      display: none;
+    }
+  }
+
+  // When video is hidden but we're in dictation/shadowing mode,
+  // the content panel takes the entire left space
+  &.video-hidden-content {
+    .video-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 320px;
+      height: 180px;
+      max-width: 320px;
+      min-height: 180px;
+      padding: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(-150vw);
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .video-info {
+      display: none;
+    }
+  }
+}
+
+// ─── Stacked content area below video ────────────────────────
+// No-Line Rule: bg shift from $color-bg parent → $color-surface-container-low
+.left-panel-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: $color-surface-container-low;
+  border-radius: 0 0 $radius-lg $radius-lg;
+  transition: background-color 0.3s ease;
+}
+
+// When video is hidden, content gets full rounded corners
+.left-panel.video-hidden-content .left-panel-content,
+.layout-no-video .left-panel-content {
+  border-radius: $radius-lg;
+}
+
+// ─── Right panel — Surface hierarchy: surface-container-low for depth ──
+.right-panel {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: $color-surface-container-low;
+  border-radius: $radius-lg;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: flex 0.3s ease, max-width 0.3s ease, opacity 0.3s ease,
+    padding 0.3s ease, background-color 0.3s ease;
+
+  &.right-panel-hidden {
+    flex: 0 0 0 !important;
+    max-width: 0 !important;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+}
+
+// Right panel main wrapper (always column)
+.right-panel-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+// ─── Panel content (grows to fill) ───────────────────────────
+.panel-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// ─── Video wrapper ───────────────────────────────────────────
+.video-wrapper {
+  background: $color-inverse-surface;
+  border-radius: $radius-lg $radius-lg 0 0;
+  overflow: hidden;
+  box-shadow: $shadow-ambient;
+  flex-shrink: 0;
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: padding 0.3s ease, background-color 0.3s ease;
+
+  &.hidden {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 180px;
+    max-width: 320px;
+    min-height: 180px;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-150vw);
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  // Shrink significantly in interactive modes — no border, bg shift only
+  &.interactive-video {
+    padding: 10px 28%;
+    background: $color-inverse-surface;
+  }
+
+  // Ensure children (YouTube) don't overflow the padding
+  &>div {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+// ─── Video container (wraps iframe + subtitle + fullscreen btn) ──
+.video-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+
+  &:hover .video-fs-btn {
+    opacity: 1;
+  }
+
+  // ── Fullscreen state ──
+  &:fullscreen {
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > div:first-child {
+      width: 100%;
+      height: 100%;
+      padding-top: 0 !important;
+
+      > div {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .subtitle-overlay {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      padding: 24px 48px;
+
+      .subtitle-en {
+        font-size: 19px;
+      }
+
+      .subtitle-ipa {
+        font-size: 15px;
+      }
+
+      .subtitle-trans {
+        font-size: 16px;
+      }
+    }
+
+    .video-fs-btn {
+      position: fixed;
+      bottom: 12px;
+      right: 12px;
+      z-index: 10000;
+    }
+  }
+}
+
+// ─── Custom fullscreen button (replaces YouTube's native fs btn) ──
+.video-fs-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s ease, background 0.2s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
+
+// ─── Hidden Video Placeholder ────────────────────────────────
+.video-hidden-placeholder {
+  flex: 1;
+  min-height: 320px;
+  background: $color-surface-container-low;
+  border-radius: $radius-lg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: $color-muted;
+  border: 2px dashed $color-outline-variant;
+  margin: 10px;
+  animation: learningFadeIn 0.3s ease;
+
+  .placeholder-icon {
+    font-size: 48px;
+    opacity: 0.5;
+    color: $color-primary;
+  }
+
+  .placeholder-text {
+    font-size: 16px;
+    font-weight: 600;
+    font-family: $font-headline;
+    color: $color-on-surface;
+  }
+}
+
+@keyframes learningFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─── Video info strip — bg shift instead of border ───────────
+.video-info {
+  flex-shrink: 0;
+  background: $color-surface-container;
+  padding: 10px 19px;
+  transition: background-color 0.3s ease;
+
+  .video-title {
+    font-size: 15px;
+    font-weight: 600;
+    font-family: $font-headline;
+    color: $color-on-surface;
+    margin: 0 0 2px 0;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .channel-name {
+    font-size: 12px;
+    color: $color-muted;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+// ─── Subtitle Overlay (floats on top of video in Watch mode) ──
+.subtitle-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 14px 10px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78) 0%, rgba(0, 0, 0, 0.45) 70%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+  animation: subtitleFadeIn 0.25s ease both;
+
+  .subtitle-en {
+    font-family: $font-body;
+    font-size: 17px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.5;
+    text-align: center;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  }
+
+  .subtitle-ipa {
+    font-family: $font-body;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+    font-style: italic;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+
+  .subtitle-trans {
+    font-family: $font-body;
+    font-size: 14px;
+    color: #FFB347;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes subtitleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.quiz-reading-panel {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  // padding: 0 10px;
+  background: $color-surface-container-low;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.quiz-reading-paragraph {
+  padding: 18px;
+  // border-radius: $radius-md;
+  background: $color-surface-container-lowest;
+  box-shadow: $shadow-ambient;
+  color: $color-on-surface;
+  font-family: $font-body;
+  font-size: 16px;
+  line-height: 2.25;
+  text-align: justify;
+}
+
+.quiz-reading-line {
+  margin: 0 0 14px;
+  text-align: justify;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.quiz-reading-segment {
+  display: inline;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: $color-on-surface;
+  font-family: $font-body;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: justify;
+  cursor: default;
+  box-shadow: none;
+}
+
+// ─── Fill-Blank Translation Panel (left side after submit) ───
+.fillblank-translation-panel {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  // padding: 0 10px;
+  background: $color-surface-container-low;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.fillblank-translation-paragraph {
+  padding: 18px;
+  // border-radius: $radius-md;
+  background: $color-surface-container-lowest;
+  box-shadow: $shadow-ambient;
+  color: $color-on-surface;
+  font-family: $font-body;
+  font-size: 16px;
+  line-height: 2.25;
+  text-align: justify;
+}
+
+.fillblank-translation-line {
+  margin: 0 0 14px;
+  text-align: justify;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.fillblank-translation-segment {
+  display: inline;
+  color: $color-on-surface;
+  font-family: $font-body;
+  font-size: inherit;
+  line-height: inherit;
+  border-radius: $radius-sm;
+  transition: background-color 0.25s ease, color 0.25s ease;
+
+  &.active {
+    background-color: $color-surface-container;
+  }
+}
+
+
+// ─── Draggable Resizer ───────────────────────────────────────
+.resizer {
+  width: 8px;
+  cursor: col-resize;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  flex-shrink: 0;
+  transition: background-color 0.2s;
+
+  &:hover .resizer-handle,
+  &:active .resizer-handle {
+    background-color: $color-primary-container;
+    width: 6px;
+  }
+
+  .resizer-handle {
+    width: 4px;
+    height: 48px;
+    border-radius: 4px;
+    background-color: $color-outline-variant;
+    transition: all 0.2s;
+  }
+
+  @media (max-width: 992px) {
+    display: none;
+  }
+}
+
+// ─── Error / Loading states ──────────────────────────────────
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 16px;
+}
+
+// ─── Coming soon placeholder ─────────────────────────────────
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+  color: $color-muted;
+
+  .coming-soon-icon {
+    font-size: 42px;
+    color: $color-disabled;
+  }
+
+  .coming-soon-text {
+    font-size: 15px;
+    font-weight: 500;
+  }
+}
+
+// ─── Responsive ──────────────────────────────────────────────
+
+// ── Tablet breakpoint ──
+@media (max-width: 992px) {
+  .learning-layout {
+    flex-direction: column;
+  }
+
+  .left-panel {
+    flex: none !important;
+    max-width: 100% !important;
+    width: 100%;
+  }
+
+  .right-panel {
+    flex: 1;
+    min-height: 0;
+    max-width: 100% !important;
+  }
+
+  .resizer {
+    display: none;
+  }
+}
+
+// ── Mobile breakpoint ──
+@media (max-width: 767px) {
+  .learning-container {
+    padding: 4px 4px 0;
+    max-height: 100vh;
+    height: 100dvh; // dynamic viewport height for mobile browsers
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  // ── Top bar: compact single row ──
+  .top-bar {
+    margin-bottom: 2px;
+    gap: 4px;
+    padding: 0 4px;
+
+    .back-btn {
+      font-size: 16px;
+      padding: 4px 6px;
+
+      span {
+        display: none;
+      }
+    }
+
+    .top-actions {
+      gap: 4px;
+    }
+  }
+
+  // ── Layout: Single column, full height ──
+  .learning-layout {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  // ── Left panel: fills ALL remaining vertical space ──
+  .left-panel {
+    flex: 1 !important;
+    max-width: 100% !important;
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  // ── Video: remove heavy padding ──
+  .video-wrapper {
+    padding: 0;
+    border-radius: $radius-md $radius-md 0 0;
+    flex-shrink: 0;
+
+    &.interactive-video {
+      padding: 0;
+    }
+  }
+
+  .video-hidden-placeholder {
+    flex: none;
+    min-height: 80px;
+    margin: 8px;
+    gap: 8px;
+    border-width: 1px;
+
+    .placeholder-icon {
+      font-size: 28px;
+    }
+
+    .placeholder-text {
+      font-size: 14px;
+    }
+  }
+
+  .video-info {
+    padding: 6px 10px;
+
+    .video-title {
+      font-size: 13px;
+    }
+
+    .channel-name {
+      font-size: 11px;
+    }
+  }
+
+  // ── Left panel content (dictation/shadowing under video) ──
+  // This MUST fill all remaining space below the video
+  .left-panel-content {
+    border-radius: 0;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  // ── Right panel: HIDDEN on mobile by default ──
+  // On mobile, the transcript/sentence-list is toggled via a floating button
+  .right-panel {
+    display: none;
+
+    &.right-panel-hidden {
+      display: none;
+    }
+  }
+
+  .resizer {
+    display: none;
+  }
+
+  // ── Subtitle overlay: compact on mobile ──
+  .subtitle-overlay {
+    padding: 10px 12px;
+    gap: 3px;
+
+    .subtitle-en {
+      font-size: 14px;
+    }
+
+    .subtitle-ipa {
+      font-size: 11px;
+    }
+
+    .subtitle-trans {
+      font-size: 12px;
+    }
+  }
+
+  .quiz-reading-paragraph {
+    padding: 14px;
+    font-size: 14px;
+    line-height: 2.2;
+  }
+
+  .fillblank-translation-paragraph {
+    padding: 14px;
+    font-size: 14px;
+    line-height: 2.2;
+  }
+}
+
+// ── Floating settings toggle on mobile ──
+.mobile-settings-fab {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: block;
+    position: fixed;
+    bottom: 80px; // Above the bottom nav/action bar
+    right: 16px;
+    z-index: 1001;
+
+    .fab-btn {
+      width: 35px;
+      height: 35px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      background: $color-primary;
+      border: none;
+
+      &:active {
+        transform: scale(0.92);
+      }
+    }
+  }
+}
+
+// ── Small mobile (< 480px) ──
+@media (max-width: 480px) {
+  .learning-container {
+    padding: 2px 2px 0;
+  }
+
+  .top-bar {
+    gap: 4px;
+    padding: 0 2px;
+  }
+
+  .video-wrapper {
+    padding: 0;
+
+    &.interactive-video {
+      padding: 0;
+    }
+  }
+}

@@ -1,0 +1,691 @@
+@use '../../../styles/abstract/variables' as *;
+
+// ─── Container — full height, no scroll ──────────────────────────────────
+.shadowing-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+// ─── Header — bg shift, no border ───────────────────────────
+.shadowing-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: $color-surface-container;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .title {
+      font-size: 15px;
+      font-weight: 600;
+      font-family: $font-headline;
+      color: $color-on-surface;
+    }
+
+    .counter {
+      font-size: 12px;
+      color: $color-muted;
+      background: $color-surface-container-high;
+      padding: 2px 10px;
+      border-radius: $radius-full;
+      font-weight: 500;
+    }
+
+    // ── Mode Toggle (Từng câu / Cả bài) ──
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 2px;
+      padding: 2px 8px;
+      background: $color-surface-container-high;
+      border-radius: $radius-full;
+
+      .mode-label {
+        font-size: 11px;
+        font-weight: 500;
+        color: $color-muted;
+        transition: color 0.2s ease;
+        user-select: none;
+        cursor: default;
+
+        &.mode-label-active {
+          color: $color-on-surface;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .submit-btn {
+    font-size: 12px;
+    height: 30px;
+    border-radius: $radius-sm;
+    background: $color-surface-container-low;
+    border: none;
+    color: $color-on-surface;
+    padding: 0 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      background: $color-surface-container-highest;
+      transform: translateY(-1px);
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .ipa-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-right: 4px;
+
+      .toggle-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: $color-muted;
+      }
+    }
+  }
+}
+
+// ─── Body — flex-grow center zone ───────────────────────────
+.shadowing-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 10px;
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ─── Text Zone (original sentence + score badge BELOW) ────────
+.mobile-support-alert {
+  margin: 8px 12px 0;
+  flex-shrink: 0;
+  border-radius: $radius-sm;
+
+  :global(.ant-alert-message) {
+    font-size: 12px;
+    line-height: 1.45;
+  }
+}
+
+.text-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+
+  .ipa {
+    font-size: 16px;
+    color: $color-muted;
+    font-style: italic;
+    line-height: 1.4;
+    text-align: center;
+    margin: 0;
+    letter-spacing: 0.15px;
+  }
+
+  .sample-text {
+    font-size: 18px;
+    font-weight: 600;
+    font-family: $font-body;
+    color: $color-on-surface;
+    text-align: center;
+    margin: 0;
+    line-height: 1.45;
+    letter-spacing: 0.15px;
+  }
+
+  .score-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 26px;
+    border-radius: $radius-full;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    animation: fadeIn 0.3s ease;
+  }
+}
+
+// ─── Live Transcript — borderless, tonal surface + shadow ───
+.live-transcript {
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.6;
+  padding: 10px 16px;
+  background: $color-surface-container-lowest;
+  border-radius: $radius-md;
+  border: none;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+  width: 100%;
+  min-height: 36px;
+  transition: all 0.2s ease;
+
+  .finalized-part {
+    color: $color-on-surface;
+    font-weight: 500;
+  }
+
+  .interim-part {
+    color: $color-muted;
+    opacity: 0.65;
+    font-style: italic;
+  }
+
+  // Blinking cursor when listening but no text yet
+  &.listening-empty::after {
+    content: '|';
+    animation: blink 1s ease-in-out infinite;
+    color: $color-muted;
+  }
+}
+
+// ─── Result Container — shadow-lift, no border ──────────────
+.result-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 18px;
+  background: $color-surface-container-lowest;
+  border-radius: $radius-md;
+  gap: 16px;
+  box-shadow: $shadow-ambient;
+  border: none;
+  animation: fadeIn 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.result-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.result-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.comparison-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.feedback-alert {
+  padding: 6px 12px;
+  border-radius: $radius-sm;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-block;
+  width: 100%;
+}
+
+.feedback-error {
+  color: $color-error;
+  background: rgba(186, 26, 26, 0.06);
+}
+
+.feedback-success {
+  color: $color-success;
+  background: rgba(46, 125, 50, 0.06);
+}
+
+// ─── Word status colors ─────────────────────────────────────
+.word-correct {
+  color: $color-success;
+  background: rgba(46, 125, 50, 0.08);
+  font-weight: 500;
+  padding: 3px 4px;
+  border-radius: $radius-sm;
+  font-size: 16px;
+}
+
+.word-incorrect {
+  color: $color-error;
+  background: rgba(186, 26, 26, 0.08);
+  font-weight: 500;
+  padding: 3px 4px;
+  border-radius: $radius-sm;
+  font-size: 16px;
+}
+
+// ─── Empty Hint ─────────────────────────────────────────────
+.empty-hint {
+  font-size: 13px;
+  color: $color-disabled;
+  text-align: center;
+}
+
+// ─── Action Bar — bg shift, no border ───────────────────────
+.action-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 14px;
+  background: $color-surface-container;
+  transition: background-color 0.3s ease;
+}
+
+.action-btn {
+  min-width: 90px;
+  height: 32px;
+  border-radius: $radius-full;
+  background: $color-surface-container-low;
+  border: none;
+  color: $color-on-surface;
+  font-size: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background: $color-surface-container-highest;
+    transform: translateY(-1px);
+  }
+}
+
+.action-placeholder {
+  min-width: 90px;
+  height: 32px;
+}
+
+// ─── Mic button & wrapper ───────────────────────────────────
+.mic-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  .mic-btn {
+    width: 52px !important;
+    height: 52px !important;
+    font-size: 22px;
+    background: linear-gradient(135deg, $color-primary 0%, $color-primary-container 100%);
+    color: $color-on-primary;
+    border: none;
+    box-shadow: $shadow-ambient;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 32px rgba(155, 69, 0, 0.18);
+    }
+
+    &.mic-recording {
+      background: $color-error !important;
+      color: $color-on-primary !important;
+      animation: pulse-recording 1.2s ease-in-out infinite;
+    }
+  }
+
+  .recording-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: $color-error;
+    animation: blink 1s ease-in-out infinite;
+  }
+}
+
+// ─── Animations ─────────────────────────────────────────────
+@keyframes pulse-recording {
+  0% {
+    box-shadow: 0 0 0 0 rgba(186, 26, 26, 0.4);
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 0 10px rgba(186, 26, 26, 0);
+    transform: scale(1.05);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(186, 26, 26, 0);
+    transform: scale(1);
+  }
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─── Shortcut Popup ─────────────────────────────────────────
+.shortcut-list {
+  padding: 8px 0;
+
+  .shortcut-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 13px;
+    color: $color-on-surface;
+    gap: 16px;
+
+    .shortcut-keys {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ─── FULL LESSON MODE ─────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+
+// ─── Scrollable transcript body ─────────────────────────────
+.full-lesson-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  gap: 4px;
+  overflow-y: auto;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ─── Segment item — borderless, bg-shift active state ───────
+.segment-item {
+  padding: 8px 12px;
+  border-radius: $radius-sm;
+  transition: all 0.25s ease;
+
+  &.segment-active {
+    background-color: $color-surface-container-lowest;
+    box-shadow: $shadow-ambient;
+  }
+
+  .segment-english {
+    font-size: 15px;
+    font-weight: 500;
+    color: $color-on-surface;
+    line-height: 1.5;
+    margin: 0;
+    text-align: center;
+  }
+
+  .segment-ipa {
+    font-size: 13px;
+    color: $color-muted;
+    font-style: italic;
+    line-height: 1.4;
+    margin: 3px 0 0;
+    letter-spacing: 0.1px;
+    text-align: center;
+  }
+}
+
+// ─── Results header (score + feedback) ──────────────────────
+.result-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 0 8px;
+  animation: fadeIn 0.3s ease;
+}
+
+.score-badge-large {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  height: 36px;
+  border-radius: $radius-full;
+  font-size: 18px;
+  font-weight: 700;
+  color: $color-on-primary;
+  letter-spacing: 0.3px;
+}
+
+.result-feedback {
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-muted;
+}
+
+// ─── Comparison words (full lesson — wrapping block) ────────
+.comparison-words-full {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: 14px;
+  line-height: 1.7;
+  padding: 8px 0;
+  animation: fadeIn 0.3s ease;
+}
+
+// ─── Video alongside toggle ─────────────────────────────────
+.video-along-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 90px;
+
+  .toggle-text {
+    font-size: 11px;
+    font-weight: 500;
+    color: $color-muted;
+    white-space: nowrap;
+    user-select: none;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ─── MOBILE RESPONSIVE ────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+
+@media (max-width: 767px) {
+  .shadowing-header {
+    padding: 6px 10px;
+    gap: 6px;
+
+    .header-left {
+      gap: 6px;
+
+      .mode-toggle {
+        padding: 2px 6px;
+        gap: 4px;
+
+        .mode-label {
+          font-size: 10px;
+        }
+      }
+
+      .counter {
+        font-size: 11px;
+        padding: 2px 8px;
+      }
+    }
+
+    .header-actions {
+      gap: 4px;
+    }
+  }
+
+  .shadowing-body {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .text-zone {
+    gap: 4px;
+
+    .sample-text {
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .ipa {
+      font-size: 13px;
+    }
+  }
+
+  .live-transcript {
+    font-size: 13px;
+    padding: 8px 12px;
+    min-height: 30px;
+  }
+
+  .result-container {
+    padding: 10px 12px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .result-right {
+    align-self: center;
+  }
+
+  .comparison-words {
+    font-size: 13px;
+    gap: 4px;
+  }
+
+  .action-bar {
+    padding: 8px 10px 10px;
+  }
+
+  .action-btn {
+    min-width: 70px;
+    height: 28px;
+    font-size: 11px;
+    padding: 0 8px;
+  }
+
+  .action-placeholder {
+    min-width: 70px;
+    height: 28px;
+  }
+
+  .mic-wrapper {
+    .mic-btn {
+      width: 44px !important;
+      height: 44px !important;
+      font-size: 18px;
+    }
+
+    .recording-label {
+      font-size: 10px;
+    }
+  }
+
+  .empty-hint {
+    font-size: 12px;
+  }
+
+  // Full lesson mode
+  .full-lesson-body {
+    padding: 8px 10px;
+    gap: 3px;
+  }
+
+  .segment-item {
+    padding: 6px 8px;
+
+    .segment-english {
+      font-size: 13px;
+    }
+
+    .segment-ipa {
+      font-size: 11px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .shadowing-body {
+    padding: 6px 8px;
+  }
+
+  .text-zone .sample-text {
+    font-size: 14px;
+  }
+
+  .action-bar {
+    padding: 6px 8px 8px;
+  }
+
+  .action-btn {
+    min-width: 60px;
+    font-size: 10px;
+    padding: 0 6px;
+  }
+
+  .mic-wrapper .mic-btn {
+    width: 40px !important;
+    height: 40px !important;
+    font-size: 16px;
+  }
+}

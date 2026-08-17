@@ -1,0 +1,212 @@
+@use '../../../styles/abstract/variables' as *;
+
+// ─── Container — full viewport immersive ─────────────────────
+.engine-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: $color-bg;
+  overflow: hidden;
+  position: relative;
+}
+
+// ─── Top Bar ─────────────────────────────────────────────────
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: $color-surface;
+  flex-shrink: 0;
+  box-shadow: $shadow-ambient;
+  z-index: 10;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: $font-body;
+  font-size: 14px;
+  font-weight: 500;
+  color: $color-muted;
+  padding: 4px 12px;
+  border-radius: $radius-md;
+  transition: all 0.2s ease;
+  min-width: 80px;
+
+  &:hover {
+    color: $color-on-surface;
+    background: $color-surface-container;
+  }
+}
+
+.top-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-text {
+  font-family: $font-headline;
+  font-size: 16px;
+  font-weight: 700;
+  color: $color-on-surface;
+}
+
+.title-counter {
+  font-family: $font-headline;
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-muted;
+  background: $color-surface-container-high;
+  padding: 2px 12px;
+  border-radius: $radius-full;
+}
+
+.top-spacer {
+  min-width: 80px; // Balance the back button
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.toggle-video-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $color-muted;
+  font-family: $font-body;
+  font-weight: 600;
+  border-radius: $radius-md;
+  
+  &:hover {
+    color: $color-on-surface;
+    background: $color-surface-container;
+  }
+}
+
+// ─── Main Layout ─────────────────────────────────────────────
+.engine-layout {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// ─── Video Panel ─────────────────────────────────────────────
+.video-panel {
+  flex-shrink: 0;
+  max-height: 40vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.video-wrapper {
+  width: 100%;
+  max-width: calc(40vh * 16 / 9);
+}
+
+.hidden {
+  display: none !important;
+}
+
+// ─── Dictation Panel ─────────────────────────────────────────
+.dictation-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: $color-surface-container-low;
+}
+
+// ─── Submission Overlay ──────────────────────────────────────
+.submit-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 100;
+  backdrop-filter: blur(4px);
+}
+
+.submit-text {
+  font-family: $font-headline;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+// ─── Mobile ──────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .top-bar {
+    padding: 8px 12px;
+    height: 52px;
+  }
+
+  .back-btn {
+    font-size: 13px;
+    min-width: auto;
+    padding: 4px 8px;
+
+    span {
+      display: none;
+    }
+  }
+
+  .top-title {
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .title-text {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+  }
+
+  .title-counter {
+    font-size: 11px;
+    padding: 1px 8px;
+  }
+
+  .top-spacer {
+    min-width: auto;
+  }
+
+  .toggle-video-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    
+    span {
+        display: none;
+    }
+  }
+
+  .video-panel {
+    max-height: 25vh;
+  }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .video-panel {
+        max-height: 40vh;
+    }
+    .top-bar {
+        height: 40px;
+        padding: 4px 12px;
+    }
+}

@@ -1,0 +1,251 @@
+.youtube-learning-page {
+  padding: 24px;
+  padding-top: 0;
+  background-color: var(--color-bg);
+  min-height: calc(100vh - 64px);
+  color: var(--color-text);
+
+  // ── Section Header (Category title + "See all") ──
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    .section-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--color-on-surface, var(--color-text));
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .section-action {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+      background: none;
+      border: none;
+      padding: 0;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  // Filter Bar Section
+  .filter-section {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-bg);
+    padding: 12px 0;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: 1px solid var(--color-surface-container, rgba(255, 255, 255, 0.05));
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.1);
+
+    .filter-row {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 8px;
+      align-items: center;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { display: none; }
+
+      .filter-pill {
+        flex-shrink: 0;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        background-color: var(--color-surface-container, rgba(255, 255, 255, 0.05));
+        color: var(--color-text);
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: 1px solid transparent;
+        outline: none;
+
+        &:hover {
+          background-color: var(--color-surface-container-high, rgba(255, 255, 255, 0.1));
+        }
+
+        &.active {
+          background: linear-gradient(135deg, var(--color-primary), var(--color-primary-container, var(--color-primary)));
+          color: #fff;
+          box-shadow: 0px 4px 8px rgba(155, 69, 0, 0.2);
+        }
+      }
+    }
+
+    .filter-row2 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+
+        > div {
+          display: flex;
+          width: 100%;
+          overflow-x: auto;
+          scrollbar-width: none;
+          &::-webkit-scrollbar { display: none; }
+        }
+
+        .solar-select {
+          width: 100% !important;
+        }
+      }
+    }
+
+    // Custom Select Styling (Solar Theme)
+    .solar-select {
+      .ant-select-selector {
+        background-color: var(--color-surface-container, rgba(255, 255, 255, 0.05)) !important;
+        border-radius: 9999px !important;
+        border: 1px solid transparent !important;
+        height: 30px !important;
+        display: flex;
+        align-items: center;
+        color: var(--color-text) !important;
+        transition: all 0.2s ease;
+        box-shadow: none !important;
+
+        &:hover {
+          background-color: var(--color-surface-container-high, rgba(255, 255, 255, 0.1)) !important;
+        }
+      }
+
+      .ant-select-selection-item {
+        line-height: 28px !important;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Video Card Solar Styling
+  .video-card-solar {
+    &.ant-card {
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    }
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0px 16px 32px rgba(155, 69, 0, 0.1) !important;
+
+      img {
+        transform: scale(1.05);
+      }
+
+      .video-card-title {
+        color: var(--color-primary) !important;
+      }
+
+      .favorite-icon-trigger,
+      .anki-sync-card-btn-trigger {
+        opacity: 1 !important;
+        transform: scale(1.1);
+      }
+    }
+
+    img {
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+  }
+
+  // Video Grid layout (Default for Desktop & Search Results)
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+
+  // ── Mobile Specifics ──
+  @media (max-width: 768px) {
+    padding: 12px;
+    padding-top: 0;
+
+    .video-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    // Special behavior for home categories list
+    .home-categories-list {
+      .video-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: 12px;
+        padding-bottom: 12px;
+        scrollbar-width: none;
+        &::-webkit-scrollbar { display: none; }
+        
+        .video-card-solar {
+          flex: 0 0 75%; // Shows ~1.33 videos
+          max-width: none;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    // Non-home grid becomes 1 column
+    &:not(:has(.home-categories-list)) .video-grid {
+      grid-template-columns: 1fr;
+      justify-items: center;
+
+      .video-card-solar {
+        width: 100%;
+        max-width: 360px;
+        
+        .video-card-title {
+          font-size: 13px !important;
+          min-height: 38px !important;
+        }
+      }
+    }
+
+    // Home scroll stays flex but card width can be adjusted
+    .home-categories-list .video-grid {
+       .video-card-solar {
+          flex: 0 0 80%; // Shows ~1.25 videos on very small screens
+       }
+    }
+  }
+
+  // Desktop Responsive Grids
+  @media (min-width: 769px) and (max-width: 1100px) {
+    .video-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (min-width: 1101px) and (max-width: 1400px) {
+    padding: 16px;
+    padding-top: 0;
+    .video-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  // Loaders
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+  }
+}
